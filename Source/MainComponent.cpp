@@ -12,7 +12,6 @@ MainComponent::MainComponent()
     
     setSize (800, 600);
 
-    // Some platforms require permissions to open input channels so request that here
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
         && ! juce::RuntimePermissions::isGranted (juce::RuntimePermissions::recordAudio))
     {
@@ -21,7 +20,6 @@ MainComponent::MainComponent()
     }
     else
     {
-        // Specify the number of input and output channels that we want to open
         setAudioChannels (2, 2);
     }
     
@@ -49,23 +47,17 @@ void MainComponent::setupTestTrack()
     DBG("MainComponent::setupTestTrack()");
     auto track = tracktion::engine::getAudioTracks(*edit)[0];
 
-    // Create and insert 4OSC synth
     if (auto plugin = edit->getPluginCache().createNewPlugin(tracktion::engine::FourOscPlugin::xmlTypeName, {}))
     {
         track->pluginList.insertPlugin(plugin, 0, nullptr);
-        
         if (auto* fourOsc = dynamic_cast<tracktion::engine::FourOscPlugin*>(plugin.get()))
         {
-            // Use oscParams directly — there are 4 oscillators
             for (int i = 0; i < fourOsc->oscParams.size(); ++i)
             {
                 auto& osc = *fourOsc->oscParams[i];
-
                 osc.waveShapeValue = 3;        // 3 = square
                 osc.levelValue = (i == 0) ? 1.0f : 0.0f; // Only osc1 active
             }
-
-            // ADSR via automatable parameters
             if (fourOsc->ampAttack)   fourOsc->ampAttack->setParameter(0.0f, juce::sendNotification);
             if (fourOsc->ampDecay)    fourOsc->ampDecay->setParameter(0.05f, juce::sendNotification);
             if (fourOsc->ampSustain)  fourOsc->ampSustain->setParameter(1.0f, juce::sendNotification);
@@ -115,7 +107,7 @@ void MainComponent::showAudioDeviceSettings()
 void MainComponent::playTestNote()
 {
     DBG("Playing test note...");
-    int midiNumber = 60;   // Middle C
+    int midiNumber = 60;
     int velocity = 100;
     int durationMs = 500;
 
