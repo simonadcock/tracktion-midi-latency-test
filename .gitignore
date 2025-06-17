@@ -1,0 +1,35 @@
+# JUCE/Projucer build output
+Builds/**/build/
+Builds/**/Builds/
+Builds/**/Makefile
+Builds/**/CMakeLists.txt.user
+Builds/**/x64/
+Builds/**/Debug/
+Builds/**/Release/
+
+# JUCE-generated intermediate files
+JuceLibraryCode/modules/
+JuceLibraryCode/juce_audio_basics.cpp
+JuceLibraryCode/juce_audio_devices.cpp
+JuceLibraryCode/juce_gui_basics.cpp
+JuceLibraryCode/include_*
+
+# Xcode clutter
+*.xcworkspace
+*.xcuserstate
+*.xcuserdata/
+*.xcsettings
+
+# macOS junk
+.DS_Store
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CMakeLists.txt.user
+
+# Backup files
+*~ 
+*.swp
+*.swo
